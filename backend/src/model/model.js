@@ -9,6 +9,8 @@ export default class ModelLocation {
 
     async getLocation(){
         const {latitude, longitude} = this.body;
+        const findSame = await prisma.location.findFirst({where: {latitude: latitude, longitude: longitude}})
+        if(findSame) return findSame;
         const save = await prisma.location.create({data: {latitude, longitude}});
         return save;
     };
