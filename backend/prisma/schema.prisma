@@ -1,6 +1,6 @@
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
+  url      = "mongodb+srv://douglvsz:Outlook.com10@geolocation.vjzxv.mongodb.net/geolocationDB?retryWrites=true&w=majority&appName=GeoLocation"
 }
 
 generator client {
