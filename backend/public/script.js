@@ -13,10 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-const options = {
-    enableHighAccuracy: true,
-    timeout: 5000
-};
 
 function saveLocation(position) {
     const { latitude, longitude } = position.coords;
@@ -24,7 +20,7 @@ function saveLocation(position) {
     
     const latitudeString = latitude.toString();
     const longitudeString = longitude.toString();
-
+    
     fetch('/saveLocation', {
         method: 'POST',
         headers: {
@@ -45,6 +41,9 @@ function saveLocation(position) {
         console.error('Erro ao salvar a localização:', error);
     });
 }
+const options = {
+    enableHighAccuracy: true
+};
 
 function errorSaveLocation(box) {
     box.style.display = 'block'

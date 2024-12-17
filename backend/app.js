@@ -7,7 +7,7 @@ import cors from 'cors'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 
 app.use(cors());
@@ -19,7 +19,4 @@ app.get('/', (req, res)=> {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-
-app.listen(port, ()=> {
-    console.log(`http://localhost:${port}`);
-});
+export default app;
